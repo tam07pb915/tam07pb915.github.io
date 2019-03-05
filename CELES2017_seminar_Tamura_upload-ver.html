@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="CELES2017 英語教育実践セミナー1" />
+  <title>タスクを用いたスピーキングの</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="CELES2017_seminar_Tamura_upload-ver_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="CELES2017_seminar_Tamura_upload-ver_files/reveal.js-3.3.0.1/css/theme/sky.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+<div id= "slide-header">
+  <div align = "right"><p>買ってください→ <a href ="http://amzn.asia/4gyoEAS">タスク・ベースの英語指導：TBLTの理解と実践</a></p>
+</div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">タスクを用いたスピーキングの</h1>
+  <h1 class="subtitle">指導と評価</h1>
+    <h2 class="author">CELES2017 英語教育実践セミナー1</h2>
+    <h3 class="date">2017年6月24日 ＠信州大学</h3>
+</section>
+
+<section><section class="titleslide slide level1"><h1>概要</h1></section><section class="slide level2">
+<h1>目的</h1>
+<ul>
+<li>Task-based Language Teaching (TBLT)の考え方にもとづき，
+<ul>
+<li>タスクを用いてスピーキングの指導と評価を行うことの意義を紹介すること
+<ul>
+<li>※今回はスピーキング以外（特に受容技能）のタスク評価の話は時間の都合でできませんごめんなさい</li>
+</ul></li>
+<li>教室内でタスクを用いた指導と評価を行うための具体的な方法を提案すること</li>
+<li>タスクを用いた評価を実際に体験してもらうことで，フロアの皆様と一緒に
+<ul>
+<li>タスクを用いた指導の可能性について議論すること</li>
+<li>タスクを用いた評価の限界や注意点について考えること</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>目次</h1>
+<ul>
+<li><p>TBLTとは</p></li>
+<li><p>タスクを用いたスピーキング指導</p></li>
+<li><p>Task-based Assessment (TBA)</p></li>
+<li><p>タスク・ベースのスピーキング評価</p></li>
+<li><p>タスク・ベースのスピーキング評価の具体例</p></li>
+<li><p>タスク・ベースのスピーキング評価の限界や注意点</p></li>
+</ul>
+</section><section id="about-me" class="slide level2" data-background="nagoya-univ_logo.png">
+<h1>About me</h1>
+<ul>
+<li>田村　祐（たむらゆう）</li>
+<li>名古屋大学大学院国際開発研究科 博士後期課程在籍</li>
+<li>愛知工科大学で非常勤講師もやっております</li>
+<li>研究の興味・関心
+<ul>
+<li>第二言語の文法習得・文処理</li>
+<li>タスクを用いた言語指導</li>
+</ul></li>
+<li>Email
+<ul>
+<li><a href="mailto:yutamura@nagoya-u.jp">yutamura@nagoya-u.jp</a></li>
+</ul></li>
+<li>Website
+<ul>
+<li><a href="http://www.tamurayu.wordpress.com" class="uri">http://www.tamurayu.wordpress.com</a></li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>※スピーキング研究の専門家というわけではありません</h1>
+</section><section class="slide level2">
+<h1>お願い</h1>
+<p>たまに「フロアの皆さんに考えてもらう，または体験してもらう」時間を取りたいと思います</p>
+</section><section class="slide level2">
+<h1>考えてみましょう</h1>
+</section><section class="slide level2">
+<h1>実際にやってみましょう</h1>
+</section><section class="slide level2">
+<h1>こんな感じでいきますのでお願いします</h1>
+<p>※私自身ワークショップ形式は苦手なので心苦しく思っております。お許し下さい。</p>
+</section></section>
+<section><section class="titleslide slide level1"><h1>タスク・ベースの言語指導とは</h1></section><section class="slide level2">
+<h1>タスクってなんだろう</h1>
+<ul>
+<li>タスクがタスクであるための条件(松村他，2017)
+<ul>
+<li>基本的な焦点が<span style="color:blue;">意味</span>にあること</li>
+<li>学習者がリソースを<span style="color:blue;">自分で選択</span>できること</li>
+<li>なんらかの<span style="color:blue;">ギャップ</span>があること</li>
+<li><span style="color:blue;">タスクの達成についての評価</span>がなされること</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>なんでタスク・ベースなんだろう</h1>
+<ul>
+<li>第二言語学習のメカニズムとの整合性
+<ul>
+<li>学習者には<span style="color:blue;">内的なシラバス</span>がある</li>
+<li>言語の発達は個別の言語項目の単なる集合体ではない</li>
+</ul></li>
+<li>学習者に合わせた柔軟なカリキュラムの提供が可能
+<ul>
+<li>TBLTは「メソッド」ではなく<span style="color:blue;">フレームワーク</span></li>
+<li>ある枠組みからこぼれ落ちた学習者を限りなく救おうとする</li>
+</ul></li>
+<li>「何を覚えたか」ではなく，<span style="color:blue;">「どんなことができるようになったか」</span>を重視
+<ul>
+<li>学習をどの段階で終えても，そのとき，そのレベルで何かができるような学習者を育成できる</li>
+</ul></li>
+<li>詳しくは，<a href="http://amzn.asia/4gyoEAS">「タスク本」</a>をお読みください（大修館さんのブースへGO！）</li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>タスクを用いたスピーキング指導</h1></section><section class="slide level2">
+<h1>どんなスピーキングのタスクがあるだろう</h1>
+<ul>
+<li>発話が求められる言語使用場面ならどんなものでもタスクになる</li>
+<li>現実には…
+<ul>
+<li>身につけさせたいスピーキングのちからを考える事が最優先</li>
+<li>つまりは，指導の目標を<span style="color:blue;">明確</span>に立てる</li>
+</ul></li>
+<li>例えば，今教えている児童・生徒・学生が…
+<ul>
+<li>1学期（前期）の終わりまでに「○○ができるようになってほしい」</li>
+<li>中学卒業時には「○○ができるようにしてから送り出したい」</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>それでは考えてみましょう</h1>
+<ul>
+<li>今現在教えている児童・生徒・学生が今年度末までにスピーキングで<span style="color:blue;">できるようになってほしいこと</span>を考えて書いてみましょう（3分間）</li>
+<li>今現在指導している立場にはない方は，「自分が英語指導者になったと想定して」，児童・生徒・学生にできるようになってほしいことを考えて書いてみましょう</li>
+<li>書き終わったら，隣近所でシェアしてみましょう（3分間）</li>
+</ul>
+</section><section class="slide level2">
+<h1>どうやって教室指導に生かせるだろう</h1>
+<ul>
+<li>先程考えた「できるようになってほしいこと」を思い浮かべてください
+<ul>
+<li>その「できるようになってほしいこと」を学習者ができるようになるためには<span style="color:blue;">どんな指導</span>が必要でしょう？</li>
+<li>学習者ができるようになったのかどうか<span style="color:blue;">確かめる</span>，<span style="color:blue;">評価する</span>ためにはどのような方法を用いたらよいでしょうか？</li>
+</ul></li>
+</ul>
+</section><section id="tblt" class="slide level2">
+<h1>TBLT的な考え方</h1>
+<p>「目標」を具体的なタスクの形に落とし込み，<span style="color:blue;">「到達規準タスク」</span>を作成する</p>
+</section></section>
+<section><section id="task-based-assessment-tba" class="titleslide slide level1"><h1>Task-based Assessment (TBA)</h1></section><section id="tblt" class="slide level2">
+<h1>TBLTでの評価はどうなってるんだろう</h1>
+<ul>
+<li><p>基本的には目標準拠評価（いわゆる絶対評価）</p></li>
+<li>スピーキングやライティングであれば文法的な正確さや流暢さなども評価はできるが，<span style="color:blue;">行動志向的な評価</span>が基本</li>
+<li>Pass or Failの<span style="color:blue;">二値評価</span>が理想, but…</li>
+<li><p>文法的な誤りは全部無視するってこと？「出川イングリッシュ」でいいの？ -&gt; It depends</p></li>
+</ul>
+</section><section id="tblt" class="slide level2">
+<h1>TBLTにおける言語的側面の評価</h1>
+<ul>
+<li>「文法を評価に入れるかは評価の目的による（Long, 2015)</li>
+<li>懸念事項
+<ul>
+<li>文法的な誤りの度合いや頻度の<span style="color:blue;">基準</span>はどう決める？</li>
+<li>タスクは達成したけど文法的誤りを犯した学習者はどう評価される？</li>
+<li>授業に占める文法の割合が高まってしまう-&gt; TBLTではなくなってしまう</li>
+</ul></li>
+<li>（後出しなら）<span style="color:blue;">タスクの達成に必要な</span>文法の指導はOK</li>
+<li>「タスク研究」としては統語的・語彙的複雑さ，正確さ，流暢さなどが扱われているが，色々問題が多すぎる（Fukuta, Nishimura, &amp; Tamura, in prep）うえに実践的な実用性は乏しい</li>
+</ul>
+</section><section class="slide level2">
+<h1>文法の扱いに関する立場の違い</h1>
+<ul>
+<li>Michael Long
+<ul>
+<li>言語的な側面に対する指導はあくまで教育的指導として
+<ul>
+<li>インプットを与えること</li>
+<li>Focus on Formを取り入れること</li>
+<li>否定的フィードバックを与えること，などに限る</li>
+</ul></li>
+</ul></li>
+<li>Rod Ellis (2003)，名城大の松村さん，and me
+<ul>
+<li>モジュラーアプローチなども許容
+<ul>
+<li>文法的なことを中心に扱うシラバスとTBLTを<span style="color:blue;">独立して</span>運用</li>
+<li>プログラムの目的や学習者に合わせて割合を調整
+<ul>
+<li>TBLT多め＋文法少なめ</li>
+<li>文法多め＋TBLT少なめ，など</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>どんなときでも大事なこと</h1>
+<ul>
+<li>何のために評価するのか
+<ul>
+<li>形成的評価（formative assessment）？総括的評価（summative assessment）？診断的評価（diagnostic assessment）？</li>
+</ul></li>
+<li>言語的な評価は「目標」や「目的」なのか？
+<ul>
+<li>何のために「いい」発音を身に着けさせる？</li>
+<li>何のために「正しい」文法を身に着けさせる？</li>
+<li>何のために「流暢な」言語産出を求める？</li>
+</ul></li>
+</ul>
+</section><section id="tba" class="slide level2">
+<h1>TBAの課題</h1>
+<ul>
+<li>1つのタスクができるかどうかを見れば別の似たようなタスクもできるといえるか？</li>
+<li>そのときに，どのようにして「似たようなタスクである」と判断できるか</li>
+<li>ただし…
+<ul>
+<li>この課題は<span style="color:blue;">あらゆる文脈における教育測定</span>も抱える問題</li>
+<li>例：あるリーディングの問題に正答した学習者は別のテキストの同じような問題に正答できる？（どうやって「同じような問題」と判断する？）(Long, 2015)</li>
+</ul></li>
+<li>現実世界で起こりうるタスクを模したタスクを教室内で実施するような場合を除き，あるタスクを達成できたかどうかを判断することは簡単ではない</li>
+<li>じゃあやっぱりタスクの評価はムリ？ -&gt; No</li>
+</ul>
+</section><section class="slide level2">
+<h1>総合的評価と分析的評価</h1>
+<ul>
+<li>総合的評価
+<ul>
+<li>スピーキングパフォーマンスを総合的に数段階で評価して1つの数値で表すこと</li>
+<li>EBB（Empirically derive, Binary-choice, Boundary-definition）尺度（e.g., Hirai &amp; Koizumi, 2013）, etc.</li>
+<li>TBLTの評価はどちらかといえばこちらに近い</li>
+</ul></li>
+<li>分析的評価
+<ul>
+<li>パフォーマンスをいくつかの観点に分けてそれぞれを数値で表すこと</li>
+<li>文法，語彙，流暢さ，談話，etc.</li>
+<li>診断的評価が目的の場合に有益</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>タスク・ベースのスピーキング評価</h1></section><section class="slide level2">
+<h1>タスクの出来をどのように評価したらいいだろう</h1>
+<ul>
+<li>みなさんは，この発話をどのように評価しますか？（※英検の面接試験の絵です） )</li>
+<li>課題：次の絵の女性を見てください。絵を見ていない人にも状況が伝わるよう英語で説明してください（制限時間30 秒）</li>
+</ul>
+</section><section class="slide level2">
+<h1>タスク・ベースのスピーキング評価規準の作成</h1>
+<ul>
+<li><span style="color:blue;">「タスクが達成されたかどうか」</span>を重視<br />
+</li>
+<li>具体的で明確な評価の基準を作っておく
+<ul>
+<li>例えば，先ほどの絵描写タスクなら，以下の2点を伝えられているかどうか
+<ul>
+<li>エレベーターが混雑している（満員である）こと</li>
+<li>女性がエレベーターに乗れないこと</li>
+</ul></li>
+<li>この2つが伝えられていれば，「タスクが達成できた」と判断する 　　- これがとりあえず全員がクリアすべき目標</li>
+</ul></li>
+<li>文法的正確さや流暢さなどは，それがタスク達成に必要である場合に評価の規準に含める</li>
+</ul>
+</section><section class="slide level2">
+<h1>先ほどの発話をもう一度聞いてみましょう</h1>
+</section><section class="slide level2">
+<h1>評価例</h1>
+<ul>
+<li>The elevetor is full. （<span style="color:blue;">○</span>エレベーターが混雑している）</li>
+<li>So…one woman is can’t ride elevator. （<span style="color:blue;">○</span>女性がエレベーターに乗れない）</li>
+<li>“is can’t”といった文法的な誤りや無冠詞のelevatorなどはあるが，設定した評価の2つのポイントはクリアしていると判断できる-&gt;「タスク達成」</li>
+</ul>
+</section><section class="slide level2">
+<h1>常に二値評価しかしないのか</h1>
+<ul>
+<li>場合によっては数段階の尺度を用いてもよい
+<ul>
+<li>例：間違い探しで見つけられた間違いの数</li>
+</ul></li>
+<li>ただし，階級数が多すぎるのは問題
+<ul>
+<li>7段階のうちで4がつく学習者はそのタスクができたの？できなかったの？ 　　- 観点別評価との兼ね合いからも3段階評価が現実的？</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>観点別評価との兼ね合い</h1>
+<ul>
+<li>「できた」・「できなかった」の二値判断でどうABC評価に？
+<ul>
+<li>案1
+<ul>
+<li>A：タスクが達成できた</li>
+<li>B：タスクが一部達成できた</li>
+<li>C：タスクが達成できなかった</li>
+</ul></li>
+<li>案2
+<ul>
+<li>A：余裕をもってタスクが達成できた</li>
+<li>B：タスクがなんとか達成できた</li>
+<li>C：タスクが達成できなかった</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>教室場面でのタスク評価</h1>
+<ul>
+<li>オブザーバー役の活用
+<ul>
+<li>生徒同士で評価をさせる</li>
+</ul></li>
+<li>タスクの達成が「残る」ようなワークシートの工夫
+<ul>
+<li>コミュニケーションの結果として情報のギャップが埋まったことが確認できる</li>
+<li>話し合いの結果として合意に至ったことが確認できる</li>
+</ul></li>
+<li>発話を録音して生徒に書き起こしをさせる（毎回ではなくとも）
+<ul>
+<li>発話の一部だけでもOK</li>
+<li>書き起こしさせることで，教師の目の届かないやりとりも評価の対象にできる</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>タスク・ベースのスピーキング評価の注意点</h1></section><section class="slide level2">
+<h1>注意点</h1>
+<ul>
+<li>目標（タスク）なしに評価はできない</li>
+<li>行動として観察可能な評価規準をつくる</li>
+<li>1度っきりの評価にしない（同じようなタスクを繰り返す機会を保障）
+<ul>
+<li>内容によってパフォーマンスはばらつく</li>
+<li>（<span style="color:blue;">1回</span>の授業の結果でタスクの達成を期待しない</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+<h1>タスク評価の（研究者としての私の）課題</h1>
+<ul>
+<li>「できた」か「できなかったか」を教師が主観的に評価することの信頼性は？</li>
+<li>生徒同士に評価させたときのの信頼性は？</li>
+<li>「スピーキング能力」の評価を主たる関心としてきたこれまでのスピーキング研究とどう接続していくのか
+<ul>
+<li>日本でいえば順天堂大の小泉先生の一連の研究など（Koizumi &amp; Kurizaki, 2002; Koizumi, In’nami, &amp; Fukazawa, 2016)</li>
+<li>10年以上前から“task achievement”といった用語は使われている（e.g., Koizumi, 2005）</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section class="titleslide slide level1"><h1>おわりに</h1></section><section class="slide level2">
+<h1>まとめ</h1>
+<ul>
+<li><a href="http://amzn.asia/4gyoEAS">『タスク・ベースの英語指導―TBLTの理解と実践』（大修館書店）をお読みください</a></li>
+<li>「できるようになってほしいこと」から出発して到達規準タスクを作成</li>
+<li>中長期的な視野を持って指導と評価を（単元というのはいいくくり）</li>
+<li>評価規準は，あくまで「タスクが達成されたか」</li>
+<li>言語的な側面の指導と評価は，「タスクを達成するために必要だから」という意識で</li>
+</ul>
+</section><section class="slide level2">
+<h1>参考資料</h1>
+<p>お手元の配布資料を御覧ください。</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="CELES2017_seminar_Tamura_upload-ver_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="CELES2017_seminar_Tamura_upload-ver_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
