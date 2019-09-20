@@ -3,7 +3,7 @@ title: "Automatic activation of number in comprehension"
 subtitle: "⚔<br/>A novel approach to form-meaning mappinng"
 author: "2019SLRF"
 institute: "@Michigan State University"
-date: "20/9/2019 (updated: `r Sys.Date()`)"
+date: "`r Sys.Date()` (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     lib_dir: libs
