@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "18|27|21|0|\n24|27|27|0|\n29|37|42|0|\n45|34|60|0|\n64|34|68|0|\n71|34|75|0|\n79|34|84|0|\n87|34|92|0|\n95|34|101|0|\n104|34|153|0|\n156|34|168|0|\n171|34|208|0|\n391|33|404|0|\n406|33|410|0|\n413|33|418|0|\n421|33|427|0|\n430|34|477|0|\n479|34|488|0|\n490|34|525|0|\n528|45|531|0|\n544|72|548|0|\n557|66|563|0|\n574|64|577|0|\n",
-    "hash" : "0",
+    "hash" : "882208665",
     "id" : "377CE9EC",
-    "lastKnownWriteTime" : 1568990769,
-    "last_content_update" : 1568990769511,
+    "lastKnownWriteTime" : 1569005046,
+    "last_content_update" : 1569005046964,
     "path" : "C:/Users/Yu/OneDrive/GitHub/tam07pb915.github.io/2019SLRF/Xaringan-slides.Rmd",
     "project_path" : "Xaringan-slides.Rmd",
     "properties" : {
-        "cursorPosition" : "611,0",
-        "scrollLine" : "592"
+        "cursorPosition" : "573,13",
+        "scrollLine" : "569"
     },
     "relative_order" : 1,
     "source_on_save" : false,

@@ -539,7 +539,7 @@ tab_model(JLE[[1]],NS[[1]],show.r2 = F,show.icc = F,show.re.var=F, pred.labels =
 ```
 ---
 class:my-one-page-font
-### The Result of the One-word Condition
+### The Results of the One-word Condition
 
 
 ```{r,echo=FALSE, message=FALSE,out.width="50%",fig.show='asis',dpi=120}
@@ -571,7 +571,7 @@ tab_model(JLE[[2]],NS[[2]],show.r2 = F,show.icc = F, show.re.var=F, auto.label =
 ```
 
 ---
-# The Result of the Two-word Condition
+# The Results of the Two-word Condition
 ```{r,echo=FALSE, message=FALSE,cache=T,out.width="50%",dpi=120}
 plot(Effect("condition",JLE[[2]]),ci.style="bar",main = list(label="L2",cex=4),grid = T,xlab = list(label="Condition",cex=4),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=2),y=list(cex=2))) #The effect of conditions
 plot(Effect("condition",NS[[2]]),ci.style="bar",main = list(label="NS",cex=4),grid = T,xlab = list(label="Condition",cex=4),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=2),y=list(cex=2))) #The effect of conditions
