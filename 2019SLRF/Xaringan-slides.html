@@ -131,6 +131,9 @@ The logic behind this task is that if the participants activate plural informati
 
 .large[B, C, D -&gt;slower]
 
+???
+C and D have more explicit information of singularity
+
 ---
 # Materials
 ## &lt;u&gt;Target items .small[(60items)]&lt;/u&gt;
@@ -202,6 +205,9 @@ The L2 learners' proficiency measure was based on the Oxford Quick Placement Tes
 one-word|2.7%|2.0%
 two-word|2.5%|2.2%]
 
+???
+This is the percentage of removed responses from (1) comprehension questions are correct, (2) number judgments are correct
+
 ---
 # Analysis (contd)
 ## &lt;u&gt; Generalized Linear Mixed-Effect Model &lt;/u&gt;
@@ -224,7 +230,6 @@ For some models, either random slope or intercepts of subject and/or items was n
 
 
 
-
 ```r
 JLE &lt;- list()
 JLE[[1]] &lt;- glmer(RT ~ s.pres.order + s.SUBTL_zipf_surface + condition + (1 + 
@@ -232,10 +237,6 @@ JLE[[1]] &lt;- glmer(RT ~ s.pres.order + s.SUBTL_zipf_surface + condition + (1 +
     family = inverse.gaussian(link = "identity"), glmerControl(optimizer = c("bobyqa", 
         "Nelder_Mead"), optCtrl = list(maxfun = 2e+05)))
 ```
-
-
-
-
 
 
 
@@ -347,13 +348,10 @@ class:my-one-page-font
 ### The Result of the One-word Condition
 
 
-
-
-&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-27-1.png" width="50%" /&gt;&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-27-2.png" width="50%" /&gt;
+&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-23-1.png" width="50%" /&gt;&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-23-2.png" width="50%" /&gt;
 
 ---
 ## Two-word condition
-
 
 
 ```r
@@ -369,6 +367,7 @@ NS[[2]] &lt;- glmer(RT ~ s.MI + s.pres.order + condition + (1 + condition | item
     data = slj1003_3_two_2, family = inverse.gaussian(link = "identity"), glmerControl(optimizer = c("bobyqa", 
         "Nelder_Mead"), optCtrl = list(maxfun = 2e+05)))
 ```
+
 ---
 class: my-table-font
 ### Summary of the fiexed effects (Two-word)
@@ -451,7 +450,7 @@ class: my-table-font
 
 ---
 # The Result of the Two-word Condition
-&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-32-1.png" width="50%" /&gt;&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-32-2.png" width="50%" /&gt;
+&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-27-1.png" width="50%" /&gt;&lt;img src="Xaringan-slides_files/figure-html/unnamed-chunk-27-2.png" width="50%" /&gt;
 
 
 ---
@@ -486,7 +485,7 @@ The contradictory inhibition of grammatical plurality and grammatical singularit
 
 ---
 # Comparison between NS and L2 (contd)
-* Both groups did not show interference in the case of _the_ + pl
+* Both groups did not show interference in the case of _the_ + sg
 &lt;br/&gt;-&gt; .red[unmarkedness] of grammatical singularity? .small[(e.g., Berent et al., 2005; Bock &amp; Cutting, 1993; Eberhard, 1997)]
 &lt;br/&gt;
 * Singularity is less likely to interfere the plural information
@@ -541,7 +540,7 @@ Do the learners morphologically decompose _-s_ and map it onto [plural]? OR do t
 ---
 ## Limitations and Future research (contd)
 * The target nouns were limited to common nouns
-&lt;br/&gt;-&gt;Need to investigate nouns that can either be countable or uncountable (e.g., _ex)
+&lt;br/&gt;-&gt;Need to investigate nouns that can either be countable or uncountable (e.g., _experience_, _thoughts_)
 
 ---
 class: my-one-page-font

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1568968842593.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "18|27|21|0|\n24|27|27|0|\n29|37|42|0|\n45|34|60|0|\n64|34|68|0|\n71|34|75|0|\n79|34|84|0|\n87|34|92|0|\n95|34|101|0|\n104|34|153|0|\n156|34|168|0|\n171|34|208|0|\n381|53|384|0|\n386|33|399|0|\n401|33|405|0|\n408|33|413|0|\n416|33|422|0|\n425|34|472|0|\n474|34|483|0|\n485|34|520|0|\n523|45|526|0|\n530|44|535|22|\n539|72|543|0|\n552|66|558|0|\n569|64|572|0|\n",
+    "hash" : "4025328139",
+    "id" : "377CE9EC",
+    "lastKnownWriteTime" : 1568977365,
+    "last_content_update" : 1568977365513,
+    "path" : "C:/Users/Yu/OneDrive/GitHub/tam07pb915.github.io/2019SLRF/Xaringan-slides.Rmd",
+    "project_path" : "Xaringan-slides.Rmd",
+    "properties" : {
+        "cursorPosition" : "244,100",
+        "scrollLine" : "231"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
