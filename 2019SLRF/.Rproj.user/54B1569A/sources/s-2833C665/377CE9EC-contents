@@ -381,8 +381,11 @@ For the measures of frequency, I used both surface and base frequency informatio
 For some models, either random slope or intercepts of subject and/or items was not included because of the convergence issues.
 
 ---
+class:center
 # Results
-## One-word condition
+
+---
+# One-word condition
 
 ```{r, message=FALSE,cache=T,results="markup",tidy=T}
 JLE<-list()
