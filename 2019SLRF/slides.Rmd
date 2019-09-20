@@ -1,0 +1,56 @@
+---
+title: "Automatic activation of number in comprehension: A novel approach to form-meaning mapping"
+subtitle: "2019SLRF"
+author: "@Michigan State University"
+date: "3/9/2019"
+output:
+  xaringan::moon_reader:
+    css: ["My-theme.css","My-font.css"]
+    
+---
+
+```{r,include=F,eval=F}
+install.packages("xaringan")
+library(xaringan)
+```
+
+
+# Overview
+* Purpose
+* Experiment
+* Results    
+* Discussion & Contribution
+* Conclusion
+
+---
+class: my-one-page-font
+# Purpose
+
+
+---
+background-image: url("Name-keynote.001.jpeg")
+* 名前のファイルは英語版に差し替えること
+---
+
+
+
+---
+# Experiment
+
+
+* 本WSでは，Rの基本的な動作トラブルにつきましてはご対応致しかねる場合がありますのでご了承ください
+
+
+---
+# Results
+
+
+---
+# Discussion & Contribution
+
+
+---
+class: my-one-page-font
+#Conclusion
+
+---

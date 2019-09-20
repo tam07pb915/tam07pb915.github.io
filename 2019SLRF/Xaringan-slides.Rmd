@@ -1,0 +1,723 @@
+---
+title: "Automatic activation of number in comprehension"
+subtitle: "⚔<br/>A novel approach to form-meaning mappinng"
+author: "2019SLRF"
+institute: "@Michigan State University"
+date: "20/9/2019 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    css: ["My-theme.css","My-font.css"]
+    
+     
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+```
+
+
+```{r,include=FALSE,eval=F}
+#install.packages("xaringan")
+library(xaringan)
+```
+
+```{r,warning=F,message=F,echo=FALSE}
+library(dplyr)
+library(tidyr)
+library(pipeR)
+library(psych)
+library(psych)
+library(lme4)
+library(sjPlot)
+library(emmeans)
+library(languageR)
+library(effects)
+library(fitdistrplus)
+source("https://raw.githubusercontent.com/aufrank/R-hacks/master/mer-utils.R")
+```
+
+
+```{r, warning=F,message=F,echo=F}
+# Stroop-like Judgment Task
+## Reading data
+slj0926<-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/SLJ_JLE_20170926.csv",header=T,sep=",")
+#slj0926$subject%>%as.factor%>%levels%>%length
+slj0926%>%
+dplyr::rename(RT=rt)->slj0926
+#slj0926%>%head(3)
+
+#Information of the Form
+c(rep("A",4),rep("B",4),rep("C",4),rep("D",4))%>%rep(.,2)->slj_one_form
+rep(c("A","B","C","D"),8)->slj_two_form
+
+c(rep(slj_one_form,each=28),rep(slj_two_form,each=32))->slj0926$form
+
+```
+
+
+
+```{r, warning=F,message=F,echo=F}
+## Reading Oxford Placement test data
+ox_test<-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/Oxford-placement-test_20170626.csv",header=T)
+#head(ox_test)
+```
+
+
+```{r, warning=F,message=F,echo=F}
+## Adding the results of Oxford-placement test to RT data
+slj0926$Ox_test<-rep(ox_test$SumScore,each=60)
+slj0926$CEFR<-rep(ox_test$CEFR,each=60)
+```
+
+
+
+```{r, warning=F,message=F,echo=F}
+#Now I am going to exclude the responses in which the participants failed to answer comprehension questions.
+slj0926%>%
+  filter(cq.acc==1)%>%
+  data.frame->slj0926_2
+```
+
+
+```{r, warning=F,message=F,echo=F}
+#Now I am going to exclude the responses where the number judgments were incorrect.
+slj0926_2%>%
+  filter(answer==1)%>%
+  data.frame()-> slj0926_3
+```
+
+
+```{r, warning=F,message=F,echo=F}
+## Divide the data set for one-one and two-words
+slj0926_3%>%
+  filter(number==1)->slj0926_3_one
+slj0926_3%>%
+  filter(number==2)->slj0926_3_two
+```
+
+
+```{r, warning=F,message=F,echo=F}
+#One word
+## Remove outliers
+#hist(slj0926_3_one$RT,breaks = "FD",xlab="RT",main="One")
+#quantile(slj0926_3_one$RT,probs = c(.90,.95,.96,.97,.98,.99))
+slj0926_3_one_2<-data.frame()
+for(i in 1:length(levels(as.factor(slj0926_3_one$subject)))){
+  slj0926_3_one%>%
+    filter(subject==i)->x 
+    m<-mean(x$RT,na.rm=T) 
+    sd<-sd(x$RT,na.rm=T) 
+    m.plus.sd<-m+(3*sd)  
+    m.minus.sd<-m-(3*sd) 
+    x$RT[x$RT < 200]<-"NA" 
+    x$RT<-as.numeric(x$RT)
+    x$RT[x$RT > 2500]<-"NA"
+    x$RT<-as.numeric(x$RT) 
+  #x$RT[x$RT < m.minus.sd]<-"NA" 
+  #x$RT<-as.numeric(x$RT)
+    x$RT[x$RT >m.plus.sd]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x<-as.data.frame(x) 
+   slj0926_3_one_2<-rbind(slj0926_3_one_2,x) 
+}
+
+#Two words
+#hist(slj0926_3_two$RT,breaks = "FD",main="Two")
+#quantile(slj0926_3_two$RT,probs = c(.90,.95,.96,.97,.98,.99))
+
+slj0926_3_two_2<-data.frame()
+for(i in 1:length(levels(as.factor(slj0926_3_two$subject)))){
+  slj0926_3_two%>%
+    filter(subject==i)->x 
+    m<-mean(x$RT,na.rm=T) 
+    sd<-sd(x$RT,na.rm=T) 
+    m.plus.sd<-m+(3*sd)  
+    m.minus.sd<-m-(3*sd) 
+    x$RT[x$RT < 200]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x$RT[x$RT > 3000]<-"NA"
+    x$RT<-as.numeric(x$RT) 
+  #x$RT[x$RT < m.minus.sd]<-"NA" 
+  #x$RT<-as.numeric(x$RT)
+    x$RT[x$RT >m.plus.sd]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x<-as.data.frame(x) 
+   slj0926_3_two_2<-rbind(slj0926_3_two_2,x) 
+}
+
+```
+
+
+```{r, warning=F,message=F,echo=F}
+## GLMM (One word)
+slj0926_3_one_2$condition<-factor(slj0926_3_one_2$condition, levels = c("common-sg","collective","common-pl","pl-dominant"))
+slj0926_3_one_2$CEFR<-factor(slj0926_3_one_2$CEFR, levels = c("A2","B1","B2","C1"),ordered = T)
+slj0926_3_two_2$condition<-factor(slj0926_3_two_2$condition, levels = c("the-pl","a-sg","one-sg","the-sg"))
+slj0926_3_two_2$CEFR<-factor(slj0926_3_two_2$CEFR, levels = c("A2","B1","B2","C1"),ordered = T)
+#Change coding
+c4<-contr.treatment(4)
+coding4<-matrix(rep(1/4,12),ncol=3)
+simple4<-c4-coding4
+contrasts(slj0926_3_one_2$condition)<-simple4
+contrasts(slj0926_3_two_2$condition)<-simple4
+```
+
+
+```{r, warning=F,message=F,echo=F}
+#one-word
+scale(slj0926_3_one_2$letter)%>%
+  as.vector -> slj0926_3_one_2$s.letter 
+scale(slj0926_3_one_2$syllable)%>%
+  as.vector -> slj0926_3_one_2$s.syllable 
+scale(slj0926_3_one_2$BNC_zipf_surface)%>%
+  as.vector -> slj0926_3_one_2$s.BNC_zipf_surface 
+scale(slj0926_3_one_2$BNC_zipf_base)%>%
+  as.vector -> slj0926_3_one_2$s.BNC_zipf_base 
+scale(slj0926_3_one_2$SUBTL_zipf_surface)%>%
+  as.vector -> slj0926_3_one_2$s.SUBTL_zipf_surface
+scale(slj0926_3_one_2$SUBTL_zipf_sum)%>%
+  as.vector -> slj0926_3_one_2$s.SUBTL_zipf_sum
+scale(slj0926_3_one_2$Ox_test)%>%
+  as.vector -> slj0926_3_one_2$s.Ox_test
+scale(slj0926_3_one_2$pres.order)%>%
+  as.vector -> slj0926_3_one_2$s.pres.order
+#two-word
+scale(slj0926_3_two_2$letter)%>%
+  as.vector -> slj0926_3_two_2$s.letter 
+scale(slj0926_3_two_2$syllable)%>%
+  as.vector -> slj0926_3_two_2$s.syllable 
+scale(slj0926_3_two_2$BNC_zipf_surface)%>%
+  as.vector -> slj0926_3_two_2$s.BNC_zipf_surface 
+scale(slj0926_3_two_2$BNC_zipf_base)%>%
+  as.vector -> slj0926_3_two_2$s.BNC_zipf_base 
+scale(slj0926_3_two_2$SUBTL_zipf_surface)%>%
+  as.vector -> slj0926_3_two_2$s.SUBTL_zipf_surface
+scale(slj0926_3_two_2$SUBTL_zipf_sum)%>%
+  as.vector -> slj0926_3_two_2$s.SUBTL_zipf_sum
+scale(slj0926_3_two_2$MI)%>%
+  as.vector -> slj0926_3_two_2$s.MI
+scale(slj0926_3_two_2$Ox_test)%>%
+  as.vector -> slj0926_3_two_2$s.Ox_test
+scale(slj0926_3_two_2$pres.order)%>%
+  as.vector -> slj0926_3_two_2$s.pres.order
+```
+
+
+
+
+# Overview
+* Purpose
+
+* Experiment
+
+* Results    
+
+* Discussion & Contribution
+
+* Conclusion
+
+???
+In today's talk, I will first briefly present the purpose of the present study and then talk about what I did, rather than giving the literature review first so that I can have more time on my research. After I present some of my findings, I will connect the findings with the previous research.
+
+---
+class: my-one-page-font
+# Purpose
+* .large[To investigate whether Japanese L2 learners of English whose L2 does not necessarily mark number are able to activate number information in online comprehension]
+
+--
+
+* .large[Why is this study needed?]
+
+---
+background-image: url("Name-keynote.001.jpeg")
+---
+
+# Problems
+* L2 acquisition of plural morphemes mostly relied on
+  * Anomaly detection (e.g., GJT, SPRT, eye-tracking)
+  * Number agreement errors
+* Detection of ungramaticality ≠ use of grammatical information (Trenkic et al., 2014; Vainio, Pajunen, & Hyona, 2016) 
+* Different approaches are needed
+
+---
+# Experiment
+
+* Self-paced reading with number judgment stroop-like task (Patson & Warren, 2010)
+  * Moving window SPRT
+  * Required to judge the number of words presented on the screen on the target region
+  * Choose 1 or 2 by pressing keys
+  * T or F comprehension question after reading the sentence
+
+---
+class:center
+<iframe width="800" height="500" src="https://www.youtube.com/embed/vFcsMhJ9l34" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+---
+
+# Conditions
+
+* One-word condition
+<br/>.small[A. The young man had to talk to the older .red[__friend__]. (singular)]
+<br/> .small[B. The young man had to talk to the older .red[__friends__]. (plural)]
+<br/> .small[C. The young man had to talk to the older .red[__couple__]. (collective)]
+<br/>.small[D. The young man had to talk to the older .red[__residents__]. (pl-dominant)]
+
+.large[<br/> B, C, D -> slower RT]
+
+???
+The logic behind this task is that if the participants activate plural information when they process plural nouns, it would inhibit the number judgment of single words
+---
+# Conditions (contd)
+* Two-word condition
+<br/>.small[A. The girl continued to chase .red[__the rabbits__]. (_the_+pl)]
+<br/>.small[B. The girl continued to chase .red[__the rabbit__]. (_the_+sg)]
+<br/>.small[C. The girl continued to chase .red[__a rabbit__]. (_a_+sg)]
+<br/>.small[D. The girl continued to chase .red[__one rabbit__]. (_one_+sg)]
+
+.large[B, C, D ->slower]
+
+---
+# Materials
+## <u>Target items .small[(60items)]</u>
+* One-word condition
+  * 28 items .small[(7 items per condition)]
+* Two-word condition
+  * 32 items .small[(8 items per condition)]
+* Always appeared in the last regions
+
+## <u>_Filler items .small[(60 items)]_</u>
+* Always appeared in the middle of the sentence
+
+---
+class: my-table-font
+#### Type of All the Items</br>
+.left[Condition] |.left[Number Mismatch] |.left[Number of words] | .left[Level] | .left[Example]  |.left[_k_]
+----------|----------------|----------------|-------|----------|
+target |no (baseline)| 1 | common sg| _cat_ |7
+|yes| 1 |common pl| _cats_| 7
+|yes| 1 |pl-dominant| _residents_| 7
+|yes| 1 |collective| _couple_| 7
+target| no (baseline)| 2| _the_ + pl| _the rabbits_| 8
+|yes| 2| _a_ + sg| _a rabbit_| 8
+|yes| 2| _one_ + sg| _one rabbit_| 8
+|yes| 2| _the_ + sg| _the rabbit_| 8
+filler| yes / no| 1|personal pronouns (sg or pl)|_him, them_| 16
+|no| 1| material nouns| _gold, stone_| 14
+|no| 2| adjective + pl| _blue shirts_| 16
+|yes / no| 2| determiner + sg or pl| _this/these issue(s)_| 14
+
+---
+# Materials (contd)
+* The number of number matched and number mismatched items were equal
+
+* All the items were presented randomly
+
+
+---
+
+# Participants
+* Japanese L2 learners of English (_n_ = 96)
+  - CEFR:A2 (_n_ = 4), B1 (_n_ = 47), B2 (_n_ = 40), C1 (_n_ = 5)
+* Native English speakers (_n_ = 32)
+  - U.S. (_n_ = 24), the U.K. (_n_ = 3), Australia (_n_ = 3), Canada (_n_ = 1), and Singapore (_n_ = 1).
+
+
+???
+
+The L2 learners' proficiency measure was based on the Oxford Quick Placement Test.
+
+---
+# Analysis
+## <u>Data cleaning</u>
+* Comprehension questions incorrect -> removed
+  - L2: 12.9%, NS: 8.4%
+* Number judgment incorrect -> removed
+  - L2: 2.9%, NS: 2.4%
+* Below 200ms -> removed
+* M + 3SD for each participant -> removed
+* Above 2500ms -> removed
+* For L2, the cut-off point in the two-word condition was set to 3000ms
+
+---
+
+### <u> Propotion of the removed responses </u>
+
+.large[|NS          | L2
+-------------|---
+one-word|2.7%|2.0%
+two-word|2.5%|2.2%]
+
+---
+# Analysis (contd)
+## <u> Generalized Linear Mixed-Effect Model </u>
+* Inverse-Gaussian distribution with identity link
+* Fixed effect: experimental condition
+  * One-word: common-sg, common-pl, pl-dominant, collective
+  * Two-word: the+pl, the+sg, a+sg, one+sg
+* Random effect: intercept and slope
+* Covariate: number of letters, frequency, presentation order, proficiency
+* Model selection was stepwise forward procedure based on AIC
+
+???
+For the measures of frequency, I used both surface and base frequency information from BNC and SUBTLEX-US in Zipf scale (log10(frequency per million words)+3). 
+For some models, either random slope or intercepts of subject and/or items was not included because of the convergence issues.
+
+---
+# Results
+## One-word condition
+```{r,echo=FALSE,message=FALSE,eval=F}
+library(lme4)
+#library(here)
+dat.JLE.one<-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/JLE-one.csv",sep = ",",header = T)
+dat.JLE.one<-dat.JLE.one[,-1]
+dat.JLE.two <-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/JLE-two.csv",sep = ",",header = T)
+dat.JLE.two<-dat.JLE.two[,-1]
+#head(dat.JLE.one)
+```
+
+```{r,message=FALSE,eval=F,echo=F}
+#Change factor level
+dat.JLE.one$condition<-factor(dat.JLE.one$condition, levels = c("common-sg","collective","common-pl","pl-dominant"))
+dat.JLE.one$CEFR<-factor(dat.JLE.one$CEFR, levels = c("A2","B1","B2","C1"),ordered = T)
+dat.JLE.two$condition<-factor(dat.JLE.two$condition, levels = c("the-pl","a-sg","one-sg","the-sg"))
+dat.JLE.two$CEFR<-factor(dat.JLE.two$CEFR, levels = c("A2","B1","B2","C1"),ordered = T)
+
+#Change coding
+c4<-contr.treatment(4)
+coding4<-matrix(rep(1/4,12),ncol=3)
+simple4<-c4-coding4
+contrasts(dat.JLE.one$condition)<-simple4
+contrasts(dat.JLE.two$condition)<-simple4
+```
+
+```{r, message=FALSE,cache=T,results="markup",tidy=T}
+JLE<-list()
+JLE[[1]]<-glmer(RT ~ s.pres.order+s.SUBTL_zipf_surface+condition+(1+condition|subject)+(1+condition|itemID),data=slj0926_3_one_2,family = inverse.gaussian(link = "identity"),glmerControl(optimizer=c("bobyqa","Nelder_Mead"),optCtrl = list(maxfun=2e5)))
+```
+
+```{r,echo=F,message=F,warning=F}
+## Reading data
+#setwd("C:/Users/Yu/Documents/dissertation")
+slj1003<-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/SLJ-NS_20171003.csv",header=T,sep=",")
+#slj1003$subject%>%as.factor%>%levels%>%length
+slj1003%>%
+dplyr::rename(RT=rt)->slj1003
+
+#Information of the Form
+c(rep("A",4),rep("B",4),rep("C",4),rep("D",4))%>%rep(.,2)->slj_one_form
+rep(c("A","B","C","D"),8)->slj_two_form
+
+c(rep(slj_one_form,each=28),rep(slj_two_form,each=32))->slj1003$form
+```
+
+```{r,echo=F,message=F,warning=F}
+slj1003%>%
+  filter(cq.acc==1)%>%
+  data.frame->slj1003_2
+```
+
+
+```{r,echo=F,message=F,warning=F}
+#Now I am going to exclude the responses where the number judgments were incorrect.
+slj1003_2%>%
+  filter(answer==1)%>%
+  data.frame()-> slj1003_3
+```
+
+
+```{r,echo=F,message=F,warning=F}
+## Divide the data set for one-one and two-words
+slj1003_3%>%
+  filter(number==1)->slj1003_3_one
+slj1003_3%>%
+  filter(number==2)->slj1003_3_two
+```
+
+
+```{r, echo=F,message=F,warning=F}
+##Remove outliers
+#One word
+#hist(slj1003_3_one$RT,breaks = "FD",main="One-word (NS)",xlab="RT",cex.lab=1.2,cex.axis=1.2,xlim=(c(0,8000)))
+#quantile(slj1003_3_one$RT,probs = c(.90,.95,.96,.97,.98,.99))
+slj1003_3_one_2<-data.frame()
+for(i in 1:length(levels(as.factor(slj1003_3_one$subject)))){
+  slj1003_3_one%>%
+    filter(subject==i)->x 
+    m<-mean(x$RT,na.rm=T) 
+    sd<-sd(x$RT,na.rm=T) 
+    m.plus.sd<-m+(3*sd)  
+    m.minus.sd<-m-(3*sd) 
+    x$RT[x$RT < 200]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x$RT[x$RT > 2500]<-"NA"
+    x$RT<-as.numeric(x$RT) 
+  #x$RT[x$RT < m.minus.sd]<-"NA" 
+  #x$RT<-as.numeric(x$RT)
+    x$RT[x$RT >m.plus.sd]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x<-as.data.frame(x) 
+   slj1003_3_one_2<-rbind(slj1003_3_one_2,x) 
+}
+#Two words
+#hist(slj1003_3_two$RT,breaks = "FD",main="Two-Word(NS)",xlab="RT",cex.lab=1.2,cex.axis=1.2,xlim=c(1,8000))
+#quantile(slj1003_3_two$RT,probs = c(.90,.95,.96,.97,.98,.99))
+slj1003_3_two_2<-data.frame()
+for(i in 1:length(levels(as.factor(slj1003_3_two$subject)))){
+  slj1003_3_two%>%
+    filter(subject==i)->x 
+    m<-mean(x$RT,na.rm=T) 
+    sd<-sd(x$RT,na.rm=T) 
+    m.plus.sd<-m+(3*sd)  
+    m.minus.sd<-m-(3*sd) 
+    x$RT[x$RT < 200]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x$RT[x$RT > 2500]<-"NA"
+    x$RT<-as.numeric(x$RT) 
+  #x$RT[x$RT < m.minus.sd]<-"NA" 
+  #x$RT<-as.numeric(x$RT)
+    x$RT[x$RT >m.plus.sd]<-"NA" 
+    x$RT<-as.numeric(x$RT) 
+    x<-as.data.frame(x) 
+   slj1003_3_two_2<-rbind(slj1003_3_two_2,x) 
+}
+
+```
+
+```{r, echo=F,message=F,warning=F}
+slj1003_3_one_2$condition<-factor(slj1003_3_one_2$condition, levels = c("common-sg","collective","common-pl","pl-dominant"))
+slj1003_3_two_2$condition<-factor(slj1003_3_two_2$condition, levels = c("the-pl","a-sg","one-sg","the-sg"))
+#Change coding
+c4<-contr.treatment(4)
+coding4<-matrix(rep(1/4,12),ncol=3)
+simple4<-c4-coding4
+contrasts(slj1003_3_one_2$condition)<-simple4
+contrasts(slj1003_3_two_2$condition)<-simple4
+```
+
+```{r, echo=F,message=F,warning=F}
+#Scaling
+#one-word
+scale(slj1003_3_one_2$letter)%>%
+  as.vector -> slj1003_3_one_2$s.letter 
+scale(slj1003_3_one_2$syllable)%>%
+  as.vector -> slj1003_3_one_2$s.syllable 
+scale(slj1003_3_one_2$BNC_zipf_surface)%>%
+  as.vector -> slj1003_3_one_2$s.BNC_zipf_surface 
+scale(slj1003_3_one_2$BNC_zipf_base)%>%
+  as.vector -> slj1003_3_one_2$s.BNC_zipf_base 
+scale(slj1003_3_one_2$SUBTL_zipf_surface)%>%
+  as.vector -> slj1003_3_one_2$s.SUBTL_zipf_surface
+scale(slj1003_3_one_2$SUBTL_zipf_base)%>%
+  as.vector -> slj1003_3_one_2$s.SUBTL_zipf_base
+scale(slj1003_3_one_2$pres.order)%>%
+  as.vector -> slj1003_3_one_2$s.pres.order
+
+#two-word
+scale(slj1003_3_two_2$letter)%>%
+  as.vector -> slj1003_3_two_2$s.letter 
+scale(slj1003_3_two_2$syllable)%>%
+  as.vector -> slj1003_3_two_2$s.syllable 
+scale(slj1003_3_two_2$BNC_zipf_surface)%>%
+  as.vector -> slj1003_3_two_2$s.BNC_zipf_surface 
+scale(slj1003_3_two_2$BNC_zipf_base)%>%
+  as.vector -> slj1003_3_two_2$s.BNC_zipf_base 
+scale(slj1003_3_two_2$SUBTL_zipf_surface)%>%
+  as.vector -> slj1003_3_two_2$s.SUBTL_zipf_surface
+scale(slj1003_3_two_2$SUBTL_zipf_base)%>%
+  as.vector -> slj1003_3_two_2$s.SUBTL_zipf_base
+scale(slj1003_3_two_2$MI)%>%
+  as.vector -> slj1003_3_two_2$s.MI
+scale(slj1003_3_two_2$pres.order)%>%
+  as.vector -> slj1003_3_two_2$s.pres.order
+```
+
+
+```{r,echo=FALSE, message=FALSE,eval=F}
+setwd()
+dat.NS.one<-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/DissertationNS-one.csv",sep = ",",header = T)
+dat.NS.one[,-1] ->dat.NS.one
+dat.NS.two <-read.csv("C:/Users/Yu/Dropbox (Kansai University)/R/Dissertation/NS-two.csv",sep = ",",header = T)
+dat.NS.two[,-1] ->dat.NS.two
+```
+
+```{r,echo=FALSE, message=FALSE,eval=F}
+dat.NS.one$condition<-factor(dat.NS.one$condition, levels = c("common-sg","collective","common-pl","pl-dominant"))
+dat.NS.two$condition<-factor(dat.NS.two$condition, levels = c("common-sg","collective","common-pl","pl-dominant"))
+#Change coding
+#c4<-contr.treatment(4)
+#coding4<-matrix(rep(1/4,12),ncol=3)
+#simple4<-c4-coding4
+contrasts(dat.NS.one$condition)<-simple4
+contrasts(dat.NS.two$condition)<-simple4
+```
+
+```{r,echo=T,cache=T,results="markup",tidy=T}
+NS <-list()
+NS[[1]] <-glmer(RT ~ s.pres.order+condition+(1+condition|subject)+(1+condition|itemID),data=slj1003_3_one_2,family = inverse.gaussian(link = "identity"),glmerControl(optimizer=c("bobyqa","Nelder_Mead"),optCtrl = list(maxfun=2e5)))
+```
+
+---
+class: my-table-font
+### Summary of the fiexed effects (One-word)
+```{r,echo=F,message=FALSE}
+tab_model(JLE[[1]],NS[[1]],show.r2 = F,show.icc = F,show.re.var=F, pred.labels = c("Intercept","order","s.SUBTL_zipf_surface","collective","common-pl","pl-dominant") ,dv.labels = c("L2","NS"),show.ngroups = F)
+```
+---
+class:my-one-page-font
+### The Result of the One-word Condition
+
+```{r, message=FALSE,echo=F,eval=F}
+# Summary of the fiexed effects (L2,one-word)
+library(sjPlot)
+tab_model(JLE[[1]],show.r2 = F,show.icc = F, show.re.var=F, pred.labels = "")
+```
+
+
+```{r,echo=FALSE, message=FALSE,out.width="50%",fig.show='asis',dpi=120}
+library(effects)
+plot(Effect("condition",JLE[[1]]),ci.style="bar",main = list(label="L2",cex=2),grid = T,xlab = list(label="Condition",cex=2),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=1.7),y=list(cex=2))) #The effect of conditions
+plot(Effect("condition",NS[[1]]),ci.style="bar",main = list(label="NS",cex=2),grid = T,xlab = list(label="Condition",cex=2),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=1.7),y=list(cex=2))) #The effect of conditions
+```
+
+---
+## Two-word condition
+```{r, message=FALSE,eval=F,echo=F}
+JLE[[2]]<-glmer(RT ~ s.pres.order+condition+(1+condition|subject)+(1+condition|itemID),data=slj0926_3_two_2,family = inverse.gaussian(link = "identity"),glmerControl(optimizer=c("bobyqa","Nelder_Mead"),optCtrl = list(maxfun=2e5)))
+
+JLE[[3]]<-update(JLE[[2]],.~.-(1+condition|subject)-(1+condition|itemID)+(0+condition|subject)+(1|subject)+(0+condition|itemID)+(1|itemID))#(0+condition|subject)+(1|subject)+(0+condition|itemID)+(1|itemID)
+```
+
+```{r, message=FALSE,cache=T,results="markup",tidy=T}
+JLE[[2]] <-glmer(RT ~ s.pres.order+condition+(0+condition|subject)+(1|subject)+(0+condition|itemID)+(1|itemID),data=slj0926_3_two_2,family = inverse.gaussian(link = "identity"),glmerControl(optimizer=c("bobyqa","Nelder_Mead"),optCtrl = list(maxfun=2e5)))
+```
+
+```{r, echo=T,message=F,warning=F,cache=T,results="markup",tidy=T}
+NS[[2]]<-glmer(RT ~ s.MI+s.pres.order+condition+
+                 (1+condition|itemID),
+               data=slj1003_3_two_2,
+               family = inverse.gaussian(link = "identity"),
+               glmerControl(optimizer=c("bobyqa","Nelder_Mead"),optCtrl = list(maxfun=2e5)))
+```
+---
+class: my-table-font
+### Summary of the fiexed effects (Two-word)
+```{r,echo=FALSE, message=FALSE}
+tab_model(JLE[[2]],NS[[2]],show.r2 = F,show.icc = F, show.re.var=F, auto.label = F, pred.labels = c("Intercept","order","a+sg","one+sg","the+sg","MI score"),dv.labels = c("L2","NS"),show.ngroups = F)
+```
+
+---
+# The Result of the Two-word Condition
+```{r,echo=FALSE, message=FALSE,cache=T,out.width="50%",dpi=120}
+plot(Effect("condition",JLE[[2]]),ci.style="bar",main = list(label="L2",cex=4),grid = T,xlab = list(label="Condition",cex=4),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=2),y=list(cex=2))) #The effect of conditions
+plot(Effect("condition",NS[[2]]),ci.style="bar",main = list(label="NS",cex=4),grid = T,xlab = list(label="Condition",cex=4),ylab = list(label="Predicted RT",cex=2),axes = list(x=list(cex=2),y=list(cex=2))) #The effect of conditions
+```
+
+
+---
+class:center
+
+# Discussion & Contribution
+---
+class:my-table-font
+## Summary
+#### One-word
+|NS          | L2
+-------------|---
+common plural|delay|delay
+collective|delay|delay
+pl-dominant|.red[**no delay**]|.red[**delay**]
+
+#### Two-word
+|NS          | L2
+-------------|---
+_the_ + N |no delay|no delay
+_a_ + N|.red[**delay**]|.red[**no delay**]
+_one_ + N|.red[**no delay**]|.red[**delay**]
+
+???
+The contradictory inhibition of grammatical plurality and grammatical singularity might be explained by the markedness of grammatical plurality and unmarkedness of grammatical singularity, as argued by L1 psycholinguistic research .small[(e.g., Berent et al., 2005).]
+
+---
+# Comparison between NS and L2
+### <u>Responses to the plural-dominant plurals</u>
+  * Maybe because of NS processed highly frequent plural forms as whole words .small[(e.g., Baayen, Dijkstra, & Schreuder, 1997; Beyersmann, Dutton, Amer, Schiller, & Biedermann, 2015; Biedermann, Beyersmann, Mason, & Nickels, 2013; New, Brysbaert, Segui, Ferrand, & Rastle, 2004 )]
+  * Japanese L2 learners' lexical processing of the plural dominant plurals were not accelerated .small[(Tamura, Morita, & Nishimura, 2016)]
+
+---
+# Comparison between NS and L2 (contd)
+* Both groups did not show interference in the case of _the_ + pl
+<br/>-> .red[unmarkedness] of grammatical singularity? .small[(e.g., Berent et al., 2005; Bock & Cutting, 1993; Eberhard, 1997)]
+<br/>
+* Singularity is less likely to interfere the plural information
+
+---
+# Comparison between NS and L2 (contd)
+### <u>Responses to _a_ + N and _one_ + N</u>
+* L2: _one_ had an impact -> partly resulting from processing tendency driven by lexical meaning? .small[(cf. Shallow Structure Hypothesis: Clahsen & Felser, 2017)]
+* NS: not _one_ but _a_ had an impact -> partly due to low MI score of _one_ + N?
+  * However, MI score cannot fully explain the results because the main effect was not significant
+  
+???
+* In fact, the mean MI scores across the four levels in the one-word condition were
+the highest for the _a_ + sg condition (a cat) and the second highest for the + sg condition (the cat) and the RT was longest when judging a + sg nouns (a cat) and the second longest when judging
+the + sg nouns (the cat)
+* the main effect of the MI score as a covariate did not reach a significant level.
+
+
+---
+class: my-one-page-font
+# Comparison with the Previous research
+### Previous Research
+  * Difficult because of L1 .small[(Morphological Congruency Hypothesis; Jiang et al., 2011, 2017)]
+  * Not difficult even for speakers whose L1 does not necessarily mark plurality .small[(e.g., Wen et al., 2010, Song, 2015)]
+
+### Present Study
+* L2 participants succeeded in making form-meaning mapping of plural _-s_, but failed in the case of singular nouns
+.red[<br/> -> Plurality of nouns is automatically activated during online sentence comprehension]  
+
+???
+What is the source of difficulty?
+
+---
+## Form-meaning mapping and agreement
+* Form-meaning mapping of plural _-s_ is easy
+* Identifying singularity of nouns is difficult -> this could be the reason why third-person singular _-s_ is difficult? .small[(e.g., Bannai, 2011; Ladiere,1998; Shibuya & Wakabayashi, 2008)]
+* Number agreement failure is due to configuration of number information?
+<br/>.red[-> Even though L2 learners can successfully identify plurality of nouns, it would be difficult for them to pass the number information?]
+
+---
+## Limitations and Future research
+* It is still not clear which is the truth:
+  * cats <-> [plural] or cat + _-s_<->[plural] 
+--
+
+* It may be interesting to investigate the visual word recognition process 
+<br/>->priming experiment? .small[(cf. Neubauer&Clahsen, 2009; Silvia&Clahsen, 2008)]
+
+???
+Do the learners morphologically decompose _-s_ and map it onto [plural]? OR do they store the plural form as it is and map it onto [plural]?
+
+---
+## Limitations and Future research (contd)
+* The target nouns were limited to common nouns
+<br/>->Need to investigate nouns that can either be countable or uncountable (e.g., _ex)
+
+---
+class: my-one-page-font
+#Conclusion
+
+* L2 Japanese learners of English were able to activate the plural information in online sentence comprehension as NS do
+* Identifying the singularity may be difficult if it is without any lexical marker (e.g., _one_)
+* Future research should investigate:
+ * the relationship between morphological decomposition, sentence processing, and number agreement
+ * the use of number information of abstract nouns
+
+

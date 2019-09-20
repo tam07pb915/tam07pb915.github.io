@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/530380/1f6d1c64a9254603bf69cd669cfbc1ec
+bundleId: https://api.rpubs.com/api/v1/document/530380/1f6d1c64a9254603bf69cd669cfbc1ec
+url: http://rpubs.com/tam07pb915/530380
+when: 1568963793.02222
