@@ -208,6 +208,11 @@ scale(slj0926_3_two_2$pres.order)%>%
   as.vector -> slj0926_3_two_2$s.pres.order
 ```
 
+## You can see the slides online
+.center[.large[![QR-code](qr20190920082142550.png)]]
+
+[https://tam07pb915.github.io/2019SLRF/Xaringan-slides.html](https://tam07pb915.github.io/2019SLRF/Xaringan-slides.html)
+---
 
 
 
@@ -667,7 +672,7 @@ class: my-one-page-font
 #Conclusion
 
 * L2 Japanese learners of English were able to activate the plural information in online sentence comprehension as NS do
-* Identifying the singularity may be difficult if it is without any lexical marker (e.g., _one_)
+* Without any lexical marker (e.g., _one_), identifying the singularity may be difficult 
 * Future research should investigate:
  * the relationship between morphological decomposition, sentence processing, and number agreement
  * the use of number information of abstract nouns
